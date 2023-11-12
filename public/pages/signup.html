@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="signup.css">
+</head>
+<body>
+
+    <div class="container">
+        <form id="signup-form" action="submit.php" method="post">
+            <h2>Sign Up</h2>
+            <div class="form-group">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+            </div>
+            <button type="submit">Sign Up</button>
+        </form>
+    </div>
+     
+       
+      
+
+
+    <script>
+        let FORM=document.getElementById("form")
+
+        let userDetails={}
+
+        form.addEventListner("input",(event)=>{
+            let value=event.target.value
+            let name=event.target.name
+            userDetails[name]= value
+            // console.log(userDetails);
+
+
+        });
+        FORM.addEventListener("submit", async(event)=>{
+            event.preventDefault()
+            if(userDetails.pass && userDetails.pass===userDetails.conPass){
+                let res= await fetch("/newuser",{
+                    method:"POST",
+                    headers:(201,{"Content-type": "application/json"}),
+                    body:JSON.stringfy(userDetails)
+                });
+
+                let result= await res.json()
+                console.log(result);
+                 
+            }
+            else{
+                alert("Password not matching.........Try again")
+            }
+        })
+
+    </script>
+    
+</body>
+</html>
